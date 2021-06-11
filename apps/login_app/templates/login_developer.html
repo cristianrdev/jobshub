@@ -1,0 +1,28 @@
+{% block content %}
+
+
+
+
+
+<form action='logindev' id='formLogin' method='post' class="bg-light m-4 p-3 rounded border">
+    <h3>Acceso desarrolladores:</h3>
+    <div class="form-group">
+        {% csrf_token %}
+        {{ logindeveloper.as_p }}
+        <button type='submit' class="btn btn-secondary">Entrar</button>
+    </div>
+
+    {% if message_login_failed_dev %}
+    <div class="text-danger bg-light">
+        {{message_login_failed_dev}}
+    </div>
+
+    {% endif %}
+    <p>¿Eres nuevo por acá? <a href="registerdeveloper">registrate acá</a> y encontrarás las mejores ofertas de trabajo</p>
+</form>
+
+
+
+
+
+{% endblock %}

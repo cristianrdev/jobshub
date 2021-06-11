@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="../static/style.css">
+
+    <title>Principal Empresa</title>
+</head>
+
+<body>
+    <h1 class="bg-secondary">Pagina principal Empresas</h1>
+    {% include "user_info.html" %}
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col bg-light">
+                <a href="new_position" class="button">Publicar una nueva oferta de trabajo</a>
+
+                <p>Lista de cargos por llenar</p>
+                <button type='submit' class="btn btn-primary">Actualizar</button>
+            </div>
+
+
+
+            <div class="col bg-primary">
+                <h3 class="text-center">Lista de Desarroladores Disponibles</h3>
+                {% for dev in all_developers %}
+                <div class="border p-2 m-2">
+                    <div class="row">
+
+                        <p class="col">{{dev.first_name}} {{dev.last_name}}</p>
+                        <!-- Qué debo poner acá para listar todos los lenguajes del developer????? -->
+                        {% for skill in dev.developer_language.all %}
+
+                        <p class="col"> {{skill.skill_name}}</p>
+
+                        {% endfor %}
+
+
+                        {% for skill in dev.developer_framework.all %}
+
+                        <p class="col"> {{skill.skill_name}}</p>
+
+                        {% endfor %}
+                        
+                        
+
+                    </div>
+
+                    <div class="row ">
+                        <p>Resumen profesional: {{dev.user_biography.short_bio}}</p>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

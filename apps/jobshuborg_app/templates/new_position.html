@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.11.0/devicon.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="../static/style.css">
+
+    <title>Nueva oferta de trabajo</title>
+</head>
+
+<body>
+
+    {% include "user_info.html" %}
+
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">Publicar oferta de trabajo en dos pasos (paso 1)</h1>
+            <p class="text-center">Hola {{active_user.first_name}} {{active_user.last_name}} estas publicando una oferta de trabajo para tu
+                empresa {{active_user.org_name}}
+            </p>
+        </div>
+
+
+        <div class="row">
+            
+            <form action="step_two" class="col-6" method="POST">
+                {% csrf_token %}
+                
+                {{position_form.as_p}}
+          
+                <a href="cancel_new_position" class="btn btn-danger">Cancelar</a>
+                <button type='submit' class="btn btn-primary">Añadir las competencias</button>
+            </form>
+
+
+            <div class="col bg-light p-2 border rounded mx-2 mb-2 mt-4" hidden>
+                <p class="text-center">Click para añadir los lenguajes requeridos:</p>
+                <div class="row" style="overflow-y: scroll; max-height: 300px;">
+                {% for language in all_languages%}
+
+
+                    {% if language.id in request.session.selected_languages%}
+                    <a href="delete_language/{{language.id}}" class="col-2 m-2 text-decoration-none bg-secondary rounded" type='submit'>
+                        <i class="{{language.icon_link_language}} display-1"></i>
+                        <p class="text-center text-white">{{language.skill_name}}</p>
+                    </a>
+                    {% else %}
+                    <a href="add_language/{{language.id}}" class="col-2 m-2 text-decoration-none" type='submit'>
+                        <i class="{{language.icon_link_language}} display-1"></i>
+                        <p class="text-center">{{language.skill_name}}</p>
+                    </a>
+                    {% endif %}
+
+
+                {% endfor%}
+                </div>
+
+
+                <p class="text-center mt-2">Click para añadir los Frameworks requeridos:</p>
+                <div class="row" style="overflow-y: scroll; max-height: 300px;">
+                {% for framework in all_frameworks%}
+
+
+
+                    {% if framework.id in request.session.selected_framework %}
+                    <a href="delete_framework/{{framework.id}}"
+                        class="col-2 m-2 text-decoration-none bg-secondary rounded" type='submit'>
+                        <i class="{{framework.icon_link_framework}} display-1"></i>
+                        <p class="text-center text-white">{{framework.skill_name}}</p>
+                    </a>
+                    {% else %}
+                    <a href="add_framework/{{framework.id}}" class="col-2 m-2 text-decoration-none" type='submit'>
+                        <i class="{{framework.icon_link_framework}} display-1"></i>
+                        <p class="text-center">{{framework.skill_name}}</p>
+                    </a>
+                    {% endif %}
+
+                {% endfor%}
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>

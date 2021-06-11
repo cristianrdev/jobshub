@@ -1,0 +1,15 @@
+
+{% block content %}
+
+<div class="text-center bg-warning text-white">
+    <h1 class="py-3 "> JobsHub </h1>
+    <p class="text-center">El mejor lugar para desarrolladores que buscan trabajo </p>
+</div>
+<div class="bg-light py-1 text-secondary d-flex justify-content-around">
+    <p class="">Hola, {{active_user.first_name}} {{active_user.last_name}}</p> <a href="/logout" class="">Cerrar
+        sesión</a>
+
+</div>
+
+
+{% endblock %}

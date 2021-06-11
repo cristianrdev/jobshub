@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.11.0/devicon.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="../../login_app/static/style.css">
+    <script>
+        function isInputNumber(evt) {
+            var ch = String.fromCharCode(evt.which);
+            if (!(/[0-9]/.test(ch))) {
+                evt.preventDefault();
+            }
+        }
+    </script>
+
+    <title>Principal Desarrollador</title>
+</head>
+
+<body>
+
+    {% include "user_info.html" %}
+    <div class="container">
+        <div class="row my-5">
+            <div class="col">
+                <form action="update_developer" method="POST">
+                    {% csrf_token %}
+                    <h3>{{active_user.first_name}}, estos son tus datos registrados</h3>
+
+                    <p>Nombre: <input type="text" class="form-control" value="{{active_user.first_name}}" disabled>
+                    </p>
+                    <p>Apellido: <input type="text" class="form-control" value="{{active_user.last_name}}" disabled>
+                    </p>
+                    <p>Email :<input type="text" class="form-control" value="{{active_user.email}}" disabled> </p>
+                    {{update_developer.as_p}}
+                    <button type='submit' class="btn btn-primary">Actualizar datos</button>
+                </form>
+            </div>
+
+
+
+
+            <div class="col border rounded">
+                <h3 class="text-center m-2">Tu perfil como desarrollador:</h3>
+                <p class="row row m-2">Recuerda mantener tu información actualizada, ¡no pierdas oportunidades
+                    laborales!
+                </p>
+                <form class="border row m-2 p-3 rounded" action="save_bio" method="post">
+                    {% csrf_token %}
+                    {{ user_biography}}
+                    <small id="passwordHelpInline" class="text-muted row">
+                        Debe ser entre 10 a 255 caracteres.
+                    </small>
+                    <button type='submit' class="btn btn-primary mt-2 ">Guardar/Modificar</button>
+                </form>
+
+                <div class=" row mx-2 mt-2 p-2 border rounded">
+                    <p class="text-center">Mis lenguajes (haz click para eliminar)</p>
+                    {% for my_languages in all_developer_languages%}
+
+                    <a href="delete_language/{{my_languages.id}}" class="col-2 m-2 text-decoration-none">
+                        <i class="{{my_languages.icon_link_language}} display-1"></i>
+                        <p class="text-center">{{my_languages.skill_name}}</p>
+
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <div class=" row m-2 p-2 border rounded">
+                    <p class="text-center" >Mis Frameworks (haz click para eliminar)</p>
+                    {% for my_frameworks in all_developer_frameworks%}
+
+
+
+                    <a href="delete_framework/{{my_frameworks.id}}" class="col-2 m-2 text-decoration-none">
+                        <i class="{{my_frameworks.icon_link_framework}} display-1"></i>
+                        <p class="text-center">{{my_frameworks.skill_name}}</p>
+
+                    </a>
+
+
+                    {% endfor %}
+                </div>
+
+
+                <div class="row bg-light p-2 border rounded mx-2 mb-2 mt-4">
+                    <p class="text-center">Click para añadir tus lenguajes:</p>
+                    <div class="row" style="overflow-y: scroll; max-height: 120px;">
+                        {% for language in all_languages%}
+                        <a href="add_language/{{language.id}}" class="col-2 m-2 text-decoration-none">
+                            <i class="{{language.icon_link_language}} display-1"></i>
+                            <p class="text-center">{{language.skill_name}}</p>
+                        </a>
+                    
+                    {% endfor%}
+                    </div>
+
+
+                    <p class="text-center mt-2">Click para añadir tus Frameworks:</p>
+                    <div class="row" style="overflow-y: scroll; max-height: 110px;">
+                        {% for framework in all_frameworks%}
+                        <a href="add_framework/{{framework.id}}" class="col-2 m-2 text-decoration-none">
+                            <i class="{{framework.icon_link_framework}} display-1"></i>
+
+                            <p class="text-center">{{framework.skill_name}}</p>
+                        </a>
+                        {% endfor%}
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

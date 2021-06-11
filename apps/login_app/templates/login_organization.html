@@ -1,0 +1,28 @@
+{% block content %}
+
+
+
+
+
+<form action='loginorg' id='formLogin' method='post' class="bg-secondary m-4 p-3 rounded text-white">
+    <h3>Si es empresa ingrese acá:</h3>
+    <div class="form-group">
+        {% csrf_token %}
+        {{ loginorganization.as_p }}
+        <button type='submit' class="btn btn-primary ">Entrar</button>
+    </div>
+
+    {% if message_login_failed_org %}
+    <div class="text-danger">
+        {{message_login_failed_org}}
+    </div>
+
+    {% endif %}
+    <p>Si eres una empresa y buscas los mejores desarroladores <a href="registerorganization" class="link-info">registrate acá</a> </p>
+</form>
+
+
+
+
+
+{% endblock %}
