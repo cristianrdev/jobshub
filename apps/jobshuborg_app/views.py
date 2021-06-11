@@ -13,16 +13,18 @@ def index(request):
     else:
         active_user = Organization.objects.get(id = int(request.session['id']))
         all_developers = Developer.objects.all()
-        all_framewors =  Framework.objects.all()
+        all_frameworks =  Framework.objects.all()
+        all_languages =  Language.objects.all()
         all_biography = Biography.objects.all()
         all_my_positions = active_user.organization_position.all()
         
         context = {
             'active_user' : active_user,
             'all_developers' : all_developers,
-            'all_framewors' : all_framewors,
+            'all_frameworks' : all_frameworks,
             'all_biography' : all_biography,
             'all_my_positions' : all_my_positions,
+            'all_languages' : all_languages,
 
         }
         return render(request, 'organization_dashboard.html' , context)
@@ -237,12 +239,12 @@ def save_position(request):
 
         #HASTA AQUI LLEGUE------------------------------------------------------
         for l in langs_objects_list:
-            new_posit.position_language = l
-            new_posit.save()
+            new_posit.position_language.add(l)
+     
 
         for f in frameworks_objects_list:
-            new_posit.position_framework = f
-            new_posit.save()
+            new_posit.position_framework.add(f)
+       
 
 
 
@@ -251,10 +253,50 @@ def save_position(request):
         request.session['selected_framework'] = []
         request.session['position_title'] = []
         request.session['position_description'] = []
-
-
-
-
         return  redirect('/')
+
+
+
+def position_detail(request, id_position):
+    if 'id' not in  request.session or request.session['type'] == "developer":
+        #si no hay sesión o si es developer devuelve al login
+        return redirect('/')
+    else:
+        active_user = Organization.objects.get(id = int(request.session['id']))
+        all_developers = Developer.objects.all()
+        all_frameworks =  Framework.objects.all()
+        all_languages =  Language.objects.all()
+        all_biography = Biography.objects.all()
+        this_position = Position.objects.get(id = id_position )
+        this_languages = this_position.position_language
+
+        # print(this_languages)
+        # print(type(this_languages))
+
+        # for i in this_languages:
+        #     print("todos los objetos lenguajes:")
+        #     print(i)
+        
+        context = {
+            'active_user' : active_user,
+            'all_developers' : all_developers,
+            'all_frameworks' : all_frameworks,
+            'all_biography' : all_biography,
+            'this_position' : this_position,
+            'all_languages' : all_languages,
+
+        }
+    return render(request, 'position_detail.html', context)
+
+def delete_position(request, id_position):
+    if 'id' not in  request.session or request.session['type'] == "developer":
+        #si no hay sesión o si es developer devuelve al login
+        return redirect('/')
+    else:
+        this_position = Position.objects.get(id = id_position )
+        this_position.delete()
+        print(id_position)
+    return redirect('/')
+
 
 

@@ -12,5 +12,7 @@ urlpatterns = [
     path('cancel_new_position', views.cancel_new_position ),
     path('save_position', views.save_position ),
     path('step_two', views.step_two ),
+    path('position_detail/<int:id_position>', views.position_detail ),
+    path('position_detail/delete_position/<int:id_position>', views.delete_position ),
 
 ]
