@@ -22,51 +22,66 @@
 
     <div class="container">
 
-        <div class="row">
 
-            <div class="col bg-light">
-                <a href="new_position" class="button">Publicar una nueva oferta de trabajo</a>
 
-                <p>Lista de cargos por llenar</p>
-                <button type='submit' class="btn btn-primary">Actualizar</button>
+
+
+        <a href="new_position" class="btn btn-warning  text-white m-4">Publicar una nueva oferta de trabajo</a>
+
+
+        <div class="row border-top rounded">
+            <div class="col ">
+                <p class="row text-center">Lista de cargos por llenar</p>
+                {% for myposition in all_my_positions %}
+                <a href="" class="row">{{myposition.position_title}} </a>
+                {% endfor%}
+
             </div>
-
-
-
-            <div class="col bg-primary">
-                <h3 class="text-center">Lista de Desarroladores Disponibles</h3>
-                {% for dev in all_developers %}
-                <div class="border p-2 m-2">
-                    <div class="row">
-
-                        <p class="col">{{dev.first_name}} {{dev.last_name}}</p>
-                        <!-- Qué debo poner acá para listar todos los lenguajes del developer????? -->
-                        {% for skill in dev.developer_language.all %}
-
-                        <p class="col"> {{skill.skill_name}}</p>
-
-                        {% endfor %}
-
-
-                        {% for skill in dev.developer_framework.all %}
-
-                        <p class="col"> {{skill.skill_name}}</p>
-
-                        {% endfor %}
-                        
-                        
-
-                    </div>
-
-                    <div class="row ">
-                        <p>Resumen profesional: {{dev.user_biography.short_bio}}</p>
-                        
-                    </div>
-                </div>
-                {% endfor %}
+            <div class="col ">
+                <p class="row text-center">Lista de cargos en evaluación</p>
             </div>
-
+            <div class="col ">
+                <p class="row text-center">Lista de cargos concluidos</p>
+            </div>
         </div>
+
+
+
+
+       
+            <h3 class="text-center">Lista de Desarroladores Disponibles</h3>
+            {% for dev in all_developers %}
+            <div class="border p-2 m-2">
+                <div class="row">
+
+                    <p class="col">{{dev.first_name}} {{dev.last_name}}</p>
+                    <!-- Qué debo poner acá para listar todos los lenguajes del developer????? -->
+                    {% for skill in dev.developer_language.all %}
+
+                    <p class="col"> {{skill.skill_name}}</p>
+
+                    {% endfor %}
+
+
+                    {% for skill in dev.developer_framework.all %}
+
+                    <p class="col"> {{skill.skill_name}}</p>
+
+                    {% endfor %}
+
+
+
+                </div>
+
+                <div class="row ">
+                    <p>Resumen profesional: {{dev.user_biography.short_bio}}</p>
+
+                </div>
+            </div>
+            {% endfor %}
+       
+
+
 
     </div>
 

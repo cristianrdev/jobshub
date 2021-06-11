@@ -14,13 +14,15 @@ def index(request):
         active_user = Organization.objects.get(id = int(request.session['id']))
         all_developers = Developer.objects.all()
         all_framewors =  Framework.objects.all()
-        all_Biography = Biography.objects.all()
+        all_biography = Biography.objects.all()
+        all_my_positions = active_user.organization_position.all()
         
         context = {
             'active_user' : active_user,
             'all_developers' : all_developers,
             'all_framewors' : all_framewors,
-            'all_Biography' : all_Biography,
+            'all_biography' : all_biography,
+            'all_my_positions' : all_my_positions,
 
         }
         return render(request, 'organization_dashboard.html' , context)
@@ -190,8 +192,8 @@ def save_position(request):
     else:
         print(f"El título de la posición --->{request.session['position_title']}")
         print(f"La descripción de la posición --->{request.session['position_description']}")
-        print(f"Los id´s de los lenguajes --->{request.session['selected_languages']}")
-        print(f"Los id´s de los frameworks --->{request.session['selected_framework']}")
+        
+        
         active_user = Organization.objects.get(id = int(request.session['id']))
         print(f"{active_user.first_name}")
 
@@ -199,13 +201,18 @@ def save_position(request):
         langs_objects_list = []
         frameworks_objects_list = []
 
-        for langs in request.session['selected_languages']:
-            print(langs)
-            langs_objects_list.append(Language.objects.get(id=langs))
+        
+        if 'selected_languages' in request.session:
+            print(f"Los id´s de los lenguajes --->{request.session['selected_languages']}")
+            for langs in request.session['selected_languages']:
+                print(langs)
+                langs_objects_list.append(Language.objects.get(id=langs))
 
-        for frame in request.session['selected_framework']:
-            print(frame)
-            frameworks_objects_list.append(Framework.objects.get(id=frame))
+        if 'selected_framework' in request.session:
+            print(f"Los id´s de los frameworks --->{request.session['selected_framework']}")
+            for frame in request.session['selected_framework']:
+                print(frame)
+                frameworks_objects_list.append(Framework.objects.get(id=frame))
 
         print(langs_objects_list)
         print(frameworks_objects_list)
