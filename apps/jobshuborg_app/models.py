@@ -10,8 +10,8 @@ class Position(models.Model):
     state_position = models.CharField(max_length=45, blank=False, null=False)
     position_organization = models.ForeignKey(Organization, related_name="organization_position", on_delete = models.CASCADE)
     #una publicacion puede tener muchos lenguajes y un lenguaje puede estar en varias posiciones
-    position_language = models.ManyToManyField(Language, blank=True, null=True ,related_name="language_position")
-    position_framework = models.ManyToManyField(Framework, blank=True, null=True ,related_name="framework_position")
+    position_language = models.ManyToManyField(Language, blank=True,related_name="language_position")
+    position_framework = models.ManyToManyField(Framework, blank=True,related_name="framework_position")
 
     position_filled_by = models.OneToOneField(Developer, blank=True, null=True ,related_name="developer_position", on_delete=models.Case)
     created_at = models.DateTimeField(auto_now_add=True)

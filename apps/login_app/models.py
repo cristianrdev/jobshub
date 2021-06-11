@@ -73,6 +73,8 @@ class Developer(models.Model):
     address_name = models.CharField(max_length=50, blank=False, null=False,)
     address_number = models.CharField(max_length=8, blank=False, null=False, validators=[ValidarLongitudMinima])
     address_detail = models.CharField(max_length=255, blank=True)
+    match = models.CharField(max_length=10, blank=True)
+    match_proportion = models.CharField(max_length=10, blank=True)
 
     # phone_number = models.CharField(max_length=50, blank=False, null=False, validators=[numeric])
     password = models.CharField(max_length=100, validators=[ValidarLongitudPassword])
