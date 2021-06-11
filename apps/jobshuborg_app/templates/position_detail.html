@@ -80,7 +80,7 @@
 
 
                 <h3 class="text-center">Match de Desarroladores</h3>
-                {% for dev in all_developers %}
+                {% for dev in all_developers|dictsortreversed:"match" %}
                 <div class="border bg-light p-2 m-2">
 
                     <div class="row ">

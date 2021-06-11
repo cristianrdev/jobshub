@@ -309,7 +309,7 @@ def position_detail(request, id_position):
             print(f"Porcentaje de coincidencia de {dev.first_name} ------->>> {porcentaje}")
             dev.match_proportion = porcentaje * 100
                                     
-                                      
+        # all_developers = Developer.objects.all().order_by('match')                             
                     
         
         context = {
