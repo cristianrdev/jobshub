@@ -283,29 +283,31 @@ def position_detail(request, id_position):
         skills_counter = len(this_position_languages) + len(this_position_frameworks)
         print(f"Numero de competencias------>{skills_counter}")
 
-        match_language_counter = 0
-        match_framework_counter = 0
+
         for dev in all_developers:
             dev.match = 0
             dev.match_proportion = 0
+            match_language_counter = 0
+            match_framework_counter = 0
             for language in all_languages:
                 if language in dev.developer_language.all():
                         if  language.id in this_position_languages:
                             print(language.skill_name) #nombra los matching entre developer y position en términos de lenguaje
                             match_language_counter = match_language_counter + 1
                             dev.match = match_language_counter #agrega el contador total en la clase Developer
-                            print(dev.match)
+                            # print(dev.match)
             for framework in all_frameworks:
                 if framework in dev.developer_framework.all():
                         if  framework.id in this_position_frameworks:
                             print(framework.skill_name) #nombra los matching entre developer y position en términos de lenguaje
                             match_framework_counter = match_framework_counter + 1
                             dev.match = dev.match + 1 #agrega el contador total en la clase Developer
-                            print(dev.match)
+                            # print(dev.match)
                             # dev.match = round((match_framework_counter + match_language_counter) /skills_counter,2)*100
-            print(f"Número de match por developer {dev.first_name} ----->>>{dev.match}")
+            # print(f"Número de match por developer {dev.first_name} ----->>>{dev.match}")
+            print(f"Número de match por developer {dev.first_name} ----->>>{match_language_counter + match_framework_counter}")
             porcentaje = dev.match/skills_counter
-            print(type(dev.match))
+            # print(type(dev.match))
             print(f"Porcentaje de coincidencia de {dev.first_name} ------->>> {porcentaje}")
             dev.match_proportion = porcentaje * 100
                                     

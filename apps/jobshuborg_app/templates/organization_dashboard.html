@@ -35,7 +35,7 @@
                 {% for myposition in all_my_positions %}
 
                 {%if myposition.state_position == "Publicada: En contratación" %}
-                <a href="position_detail/{{myposition.id}}" class="row">{{myposition.position_title}} </a>
+                <a href="position_detail/{{myposition.id}}" class="row link-primary text-decoration-none">{{myposition.position_title}} </a>
                 {% endif %}
 
 
