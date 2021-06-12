@@ -289,6 +289,8 @@ def position_detail(request, id_position):
             dev.match_proportion = 0
             match_language_counter = 0
             match_framework_counter = 0
+            dev.skills_number = len(dev.developer_language.all()) + len(dev.developer_framework.all())
+
             for language in all_languages:
                 if language in dev.developer_language.all():
                         if  language.id in this_position_languages:
@@ -302,6 +304,7 @@ def position_detail(request, id_position):
                             print(framework.skill_name) #nombra los matching entre developer y position en términos de lenguaje
                             match_framework_counter = match_framework_counter + 1
                             dev.match = dev.match + 1 #agrega el contador total en la clase Developer
+                           
                             # print(dev.match)
                             # dev.match = round((match_framework_counter + match_language_counter) /skills_counter,2)*100
             # print(f"Número de match por developer {dev.first_name} ----->>>{dev.match}")
@@ -309,8 +312,10 @@ def position_detail(request, id_position):
             porcentaje = dev.match/skills_counter
             # print(type(dev.match))
             print(f"Porcentaje de coincidencia de {dev.first_name} ------->>> {porcentaje}")
+            print(f"Numero de frameworks de {dev.first_name} ------->>> {dev.skills_number}")
             dev.match_proportion = porcentaje * 100
-                                    
+         
+
         # all_developers = Developer.objects.all().order_by('match')                             
                     
         
