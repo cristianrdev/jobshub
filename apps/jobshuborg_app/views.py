@@ -348,7 +348,9 @@ def developer_detail(request, id_developer):
         #si no hay sesión o si es developer devuelve al login
         return redirect('/')
     else:    
-        return redirect('/messages')
+        # return redirect('/messages')
+
+        return redirect('/messages/'+ str(id_developer))
 
 
 

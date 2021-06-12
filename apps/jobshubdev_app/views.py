@@ -5,11 +5,13 @@ from .models import Biography
 from . import skills_creator
 from .forms.update_dev import UpdateDeveloper
 from .forms.biography import BiographyForm 
+from apps.messages_app.models import MessageOrg
 
 # Create your views here.
 def index(request):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         this_user = Developer.objects.get(id = int(request.session['id']))
@@ -20,6 +22,29 @@ def index(request):
         user_biography = BiographyForm()
         update_developer = UpdateDeveloper(instance=this_user)
 
+        messages_this_developer = this_user.developer_message.all()
+        
+
+        pending_messages = False
+        organizations_pending = [] # listas de empresas con mensajes pendientes
+        no_pending_messages = [] # listas de empresas con mensajes pendientes
+        for i in  messages_this_developer:
+            print(f"{i.message_content} escrito por {i.message_created_by.first_name} de la empresa {i.message_created_by.org_name}")
+            if i.readed_for_developer == False:
+                pending_messages == True
+                pend = {i.message_created_by.id : i.message_created_by.org_name}
+                if not pend in organizations_pending:   #evita repetir los elementos en el diccionario
+                    organizations_pending.append(pend)
+
+
+            if i.readed_for_developer == True:
+                pending_messages == False
+                nopend = {i.message_created_by.id:i.message_content}
+                if not nopend in no_pending_messages: #evita repetir los elementos en el diccionario
+                    no_pending_messages.append(nopend)
+
+        print(f"El diccionario de pendientes ==> {organizations_pending}")
+        print(f"El diccionario de mensajes leidos  ==> {no_pending_messages}")
     
         
         try:
@@ -37,6 +62,9 @@ def index(request):
             "all_developer_frameworks": all_developer_frameworks,
             "user_biography" : user_biography,
             "update_developer" : update_developer,
+            "pending_messages" : pending_messages,
+            "organizations_pending" : organizations_pending,
+            "no_pending_messages" : no_pending_messages,
         
         }
         
@@ -46,6 +74,7 @@ def index(request):
 def addlanguage(request, id_language):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         print(id_language)
@@ -58,6 +87,7 @@ def addlanguage(request, id_language):
 def addframework(request, id_framework):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         print(id_framework)
@@ -70,6 +100,7 @@ def addframework(request, id_framework):
 def deletelanguage(request, id_language):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         print(id_language)
@@ -82,6 +113,7 @@ def deletelanguage(request, id_language):
 def deleteframework(request, id_framework):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         print(id_framework)
@@ -93,6 +125,7 @@ def deleteframework(request, id_framework):
 def update_developer(request):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         this_user = Developer.objects.get(id = int(request.session['id']))
@@ -110,6 +143,7 @@ def update_developer(request):
 def save_bio(request):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         this_user = Developer.objects.get(id = int(request.session['id']))
@@ -136,6 +170,7 @@ def save_bio(request):
 def makedata(request):
     if 'id' not in  request.session or request.session['type'] == "organization":
         #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
         skills_creator.makelanguage()

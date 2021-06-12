@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.11.0/devicon.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="../static/style.css">
+
+    <title>Mensajes</title>
+</head>
+
+<body>
+
+    {% include "user_info.html" %}
+
+    <div class="container">
+        <a href="/">Atrás</a>
+        <div class="row">
+            <div class="d-flex justify-content-center">
+                <h2 class="text-center">Conversación con {{this_organization.first_name}}
+                    {{this_organization.last_name}} de {{this_organization.org_name}}</h2>
+
+            </div>
+        </div>
+
+
+
+        <!-- FORMULARIO PARA INGRESAR MENSAJES COMIENZAN ACA -->
+        <div class="row border rounded mt-3">
+            <p class="bg-primary text-white border-bottom">Puede escribir a {{this_organization.first_name}} un mensaje
+                directo o enviar un
+                email a {{this_organization.email}} </p>
+
+
+            <form class=" col-5 m-2 p-3 " action="make_developer_message/{{this_organization.id}}" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="message_content">
+
+                <small id="passwordHelpInline" class="text-muted row">
+                    Máximo 255 caracteres.
+                </small>
+                <button type='submit' class="btn btn-primary mt-2 "> Enviar</button>
+            </form>
+        </div>
+
+        <a href="/">Atrás</a>
+    </div>
+
+</body>
+
+</html>
