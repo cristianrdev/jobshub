@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.login_app',
     'apps.jobshuborg_app',
     'apps.jobshubdev_app',
+    'apps.messages_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

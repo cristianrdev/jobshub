@@ -14,5 +14,6 @@ urlpatterns = [
     path('step_two', views.step_two ),
     path('position_detail/<int:id_position>', views.position_detail ),
     path('position_detail/delete_position/<int:id_position>', views.delete_position ),
+    path('developer_detail/<int:id_developer>', views.developer_detail ),
 
 ]

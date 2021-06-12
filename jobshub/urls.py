@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('apps.login_app.urls')),
     path('jobshubdev/', include('apps.jobshubdev_app.urls')),
     path('jobshuborg/', include('apps.jobshuborg_app.urls')),
+    path('messages/', include('apps.messages_app.urls')),
 ]

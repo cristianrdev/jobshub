@@ -343,4 +343,12 @@ def delete_position(request, id_position):
     return redirect('/')
 
 
+def developer_detail(request, id_developer):
+    if 'id' not in  request.session or request.session['type'] == "developer":
+        #si no hay sesión o si es developer devuelve al login
+        return redirect('/')
+    else:    
+        return redirect('/messages')
+
+
 
