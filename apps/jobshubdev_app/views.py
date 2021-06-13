@@ -198,4 +198,6 @@ def  delete_developer(request, id_developer):
     else:
         print(f'usuario a borrar {id_developer}')
         this_user = Developer.objects.get(id = id_developer)
+        this_user.delete()
+        request.session.delete()
         return redirect('/')
