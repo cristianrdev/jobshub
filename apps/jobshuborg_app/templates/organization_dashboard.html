@@ -30,28 +30,42 @@
 
 
         <div class="row border-top rounded">
-            <div class="col ">
-                <p class="text-center font-weight-bold ">Lista de cargos por ocupar</p>
-                {% for myposition in all_my_positions %}
+            <div class="d-flex justify-content-between">
+                <div class="text-center ">
+                    <p class="text-center font-weight-bold ">Lista de cargos por ocupar</p>
+                    {% for myposition in all_my_positions %}
+                    {%if myposition.state_position == "En contratacion" %}
+                    <a href="position_detail/{{myposition.id}}"
+                        class=" link-primary text-decoration-none text-center">{{myposition.position_title}}</a>
+                    {% endif %}
+                    {% endfor%}
+                </div>
+                <div class="text-center">
+                    <p class="text-center font-weight-bold ">Lista de cargos en evaluación</p>
 
-                {%if myposition.state_position == "Publicada: En contratación" %}
-                <a href="position_detail/{{myposition.id}}" class="row link-primary text-decoration-none">{{myposition.position_title}} </a>
-                {% endif %}
 
+                    {% for myposition in all_my_positions %}
+                    {%if myposition.state_position == "En evaluacion" %}
+                    <a href="position_detail/{{myposition.id}}"
+                        class="link-primary text-decoration-none text-center">{{myposition.position_title}} </a>
+                    {% endif %}
+                    {% endfor%}
 
-                {% endfor%}
-
-            </div>
-            <div class="col border-start">
-                <p class="text-center font-weight-bold ">Lista de cargos en evaluación</p>
-            </div>
-            <div class="col border-start">
-                <p class="text-center font-weight-bold ">Lista de cargos concluidos</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-center font-weight-bold ">Lista de cargos concluidos</p>
+                    {% for myposition in all_my_positions %}
+                    {%if myposition.state_position == "Terminada" %}
+                    <a href="position_detail/{{myposition.id}}"
+                        class=" link-primary text-decoration-none ">{{myposition.position_title}} </a>
+                    {% endif %}
+                    {% endfor%}
+                </div>
             </div>
         </div>
 
 
-        
+
 
 
         <h3 class="text-center mt-4">Lista de Desarroladores Disponibles</h3>
@@ -60,11 +74,13 @@
             <div class="row ">
 
                 <div class="col-4">
-                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none"><p class="text-center fw-bold"> {{dev.first_name}} {{dev.last_name}}</p></a>
-                    
-                      
+                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none">
+                        <p class="text-center fw-bold"> {{dev.first_name}} {{dev.last_name}}</p>
+                    </a>
+
+
                     <div class="border round bg-white p-2">
-                        
+
                         <p class="text-justify">{{dev.user_biography.short_bio}}</p>
                     </div>
 
@@ -79,7 +95,7 @@
                     <div class="row">
                         <p class=" text-center"> {{language.skill_name}}</p>
                     </div>
-                  
+
                 </div>
                 {% endif %}
                 {% endfor %}

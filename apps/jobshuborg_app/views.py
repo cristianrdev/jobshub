@@ -230,7 +230,7 @@ def save_position(request):
         new_posit = Position.objects.create(
             position_title = request.session['position_title'],
             position_description = request.session['position_description'],
-            state_position = "Publicada: En contratación",
+            state_position = "En contratacion",
             position_organization = active_user,
 
             # position_filled_by = [] #aun no se contrata a nadie
@@ -354,3 +354,17 @@ def developer_detail(request, id_developer):
 
 
 
+def update_state_position(request, id_position):
+    if 'id' not in  request.session or request.session['type'] == "developer":
+        #si no hay sesión o si es developer devuelve al login
+        return redirect('/')
+    else:  
+
+        print( f"Estado Inicial ==>{request.POST['state_position']}")
+        this_position_to_update = Position.objects.get(id = id_position)
+
+
+        this_position_to_update.state_position = request.POST['state_position']
+        this_position_to_update.save(update_fields = ['state_position'])
+
+        return redirect('/jobshuborg/position_detail/'+ str(id_position))

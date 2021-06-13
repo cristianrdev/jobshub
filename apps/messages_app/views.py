@@ -3,7 +3,7 @@ from apps.jobshuborg_app.models import Position
 from django.shortcuts import redirect, render
 from apps.login_app.models import Organization, Developer
 from apps.jobshubdev_app.models import Language, Framework, Biography
-from apps.messages_app.models import MessageOrg, MessageDev, Message
+from apps.messages_app.models import Message
 
 
 # Create your views here.

@@ -5,7 +5,7 @@ from .models import Biography
 from . import skills_creator
 from .forms.update_dev import UpdateDeveloper
 from .forms.biography import BiographyForm 
-from apps.messages_app.models import Message, MessageOrg
+from apps.messages_app.models import Message
 
 # Create your views here.
 def index(request):

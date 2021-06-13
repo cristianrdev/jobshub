@@ -15,5 +15,6 @@ urlpatterns = [
     path('position_detail/<int:id_position>', views.position_detail ),
     path('position_detail/delete_position/<int:id_position>', views.delete_position ),
     path('developer_detail/<int:id_developer>', views.developer_detail ),
+    path('position_detail/update_state_position/<int:id_position>', views.update_state_position ),
 
 ]
