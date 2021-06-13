@@ -33,7 +33,7 @@
 
     <div class="container">
 
-         
+
         <div class="row">
             <div class="col">
                 {% include "login_developer.html" %}
@@ -43,9 +43,45 @@
             </div>
         </div>
 
+        <h3 class="text-center text-muted">Ofertas de trabajo disponibles</h3>
+        <!-- Lista de cargos isponibles -->
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <div class="text-center flex-fill bg-light ">
+                    <h5 class="border-bottom">Lista de cargos por ocupar</h5>
+
+                    {% for position in all_positions %}
+                    {%if position.state_position == "En contratacion" %}
+                    <h5 class="text-primary">{{position.position_title}}</h5>
+                    {% endif %}
+                    {% endfor%}
+                </div>
+                <div class="text-center flex-fill ">
+                    <h5 class="border-bottom">Lista de cargos en evaluación</h5>
+
+                    {% for position in all_positions %}
+                    {%if position.state_position == "En evaluacion" %}
+                    <h5 class="text-info">{{position.position_title}}</h5>
+                    {% endif %}
+                    {% endfor%}
+
+                </div>
+                <div class="text-center flex-fill bg-light">
+                    <h5 class="border-bottom">Lista de cargos concluidos</h5>
+
+                    {% for position in all_positions %}
+                    {%if position.state_position == "Terminada" %}
+                    <h5 class="text-dark">{{position.position_title}}</h5>
+                    {% endif %}
+                    {% endfor%}
+                </div>
+            </div>
+        </div>
+        <!-- FIN Lista de cargos disponibles -->
+
 
     </div>
-   
+
 
 
 

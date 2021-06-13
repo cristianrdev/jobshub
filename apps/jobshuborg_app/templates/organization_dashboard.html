@@ -27,12 +27,12 @@
 
 
         <a href="new_position" class="btn btn-warning  text-white m-4">Publicar una nueva oferta de trabajo</a>
-
-
-        <div class="row border-top rounded">
+        <!-- tabla lista de publicaciones de trabajo] -->
+       
+        <div class="row  rounded">
             <div class="d-flex justify-content-between">
-                <div class="text-center ">
-                    <p class="text-center font-weight-bold ">Lista de cargos por ocupar</p>
+                <div class="text-center flex-fill bg-light">
+                    <p class="font-weight-bold border-bottom">Lista de cargos por ocupar</p>
                     {% for myposition in all_my_positions %}
                     {%if myposition.state_position == "En contratacion" %}
                     <a href="position_detail/{{myposition.id}}"
@@ -40,8 +40,8 @@
                     {% endif %}
                     {% endfor%}
                 </div>
-                <div class="text-center">
-                    <p class="text-center font-weight-bold ">Lista de cargos en evaluación</p>
+                <div class="text-center flex-fill ">
+                    <p class="font-weight-bold border-bottom">Lista de cargos en evaluación</p>
 
 
                     {% for myposition in all_my_positions %}
@@ -52,8 +52,8 @@
                     {% endfor%}
 
                 </div>
-                <div class="text-center">
-                    <p class="text-center font-weight-bold ">Lista de cargos concluidos</p>
+                <div class="text-center flex-fill bg-light">
+                    <p class="font-weight-bold border-bottom" >Lista de cargos concluidos</p>
                     {% for myposition in all_my_positions %}
                     {%if myposition.state_position == "Terminada" %}
                     <a href="position_detail/{{myposition.id}}"
@@ -64,6 +64,27 @@
             </div>
         </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- FIN TABLA PUBLICACIONES -->
 
 
 

@@ -4,6 +4,7 @@ from .models import Organization, Developer
 #importar los forms 
 from .forms.register import DeveloperForm , OrganizationForm
 from .forms.login import LoginOrganizationForm, LoginDeveloperForm
+from apps.jobshuborg_app.models import Position
 
 # Create your views here.
 def index(request):
@@ -12,11 +13,15 @@ def index(request):
         # si no existe la sesión se muestra los forms de login
         if 'id' not in  request.session :
             #presentar LoginForm de empresa y desarrollador
+            all_positions = Position.objects.all()
             logindeveloper = LoginDeveloperForm()
             loginorganization = LoginOrganizationForm()
+            for pos in all_positions:
+                print(pos.position_title)
             context = {
                 'logindeveloper' : logindeveloper,
                 'loginorganization' : loginorganization,
+                'all_positions' : all_positions,
             }
             return render(request, 'login_page.html', context)
         
