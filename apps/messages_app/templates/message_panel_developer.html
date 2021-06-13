@@ -30,16 +30,39 @@
             </div>
         </div>
 
+        <!-- LOS MENSAJES COMIENZAN ACA -->
+        <p class=" text-muted border-bottom">Puede escribir a {{this_organization.first_name}} un mensaje
+            directo o enviar un
+            email a {{this_organization.email}} </p>
+        <div class="row">
+
+
+            <div class="border col-6">
+              
+                {% for messages in all_messages %}
+                    {% if messages.user_type == "developer"%}
+                    <div class="d-flex flex-row-reverse bd-highlight"><p class="border-info bg-light m-2 rounded ">{{messages.message_content}} | {{messages.created_at}}</p></div>
+                    {% endif %}
+
+                    {% if messages.user_type == "organization"%}
+                    <div class="d-flex flex-row bd-highlight"><p class="border-info bg-primary text-white m-2 p-2 rounded">{{messages.message_content}} |  - {{messages.created_at}}</p></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+
+
+        </div>
+
 
 
         <!-- FORMULARIO PARA INGRESAR MENSAJES COMIENZAN ACA -->
         <div class="row border rounded mt-3">
-            <p class="bg-primary text-white border-bottom">Puede escribir a {{this_organization.first_name}} un mensaje
-                directo o enviar un
-                email a {{this_organization.email}} </p>
 
 
-            <form class=" col-5 m-2 p-3 " action="make_developer_message/{{this_organization.id}}" method="post">
+
+            <form class=" col-6 m-2 p-3 " action="make_developer_message/{{this_organization.id}}" method="post">
                 {% csrf_token %}
                 <input type="text" class="form-control" name="message_content">
 

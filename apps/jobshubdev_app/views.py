@@ -1,11 +1,11 @@
 from apps.jobshubdev_app.models import Framework, Language
 from django.shortcuts import render, redirect
-from apps.login_app.models import Developer
+from apps.login_app.models import Developer, Organization
 from .models import Biography
 from . import skills_creator
 from .forms.update_dev import UpdateDeveloper
 from .forms.biography import BiographyForm 
-from apps.messages_app.models import MessageOrg
+from apps.messages_app.models import Message, MessageOrg
 
 # Create your views here.
 def index(request):
@@ -15,36 +15,49 @@ def index(request):
         return redirect('/')
     else:
         this_user = Developer.objects.get(id = int(request.session['id']))
+        this_user_id = int(request.session['id'])
+        all_messages = Message.objects.all()
+
         all_languages = Language.objects.all()
         all_frameworks = Framework.objects.all()
         all_developer_languages= this_user.developer_language.all()
         all_developer_frameworks= this_user.developer_framework.all()
         user_biography = BiographyForm()
+
         update_developer = UpdateDeveloper(instance=this_user)
 
-        messages_this_developer = this_user.developer_message.all()
+        messages_pending = Message.objects.filter(reciever_id = this_user_id).filter(readed = False)
+        messages_readed = Message.objects.filter(reciever_id = this_user_id).filter(readed = True)
+
+        messages_pending_list = []
+        messages_readed_list = []
+
         
+        if messages_pending:
+            for mess_pend in messages_pending:
+                print(mess_pend.sender_id)
+                org = Organization.objects.get(id = int(mess_pend.sender_id))
+                print(Organization.objects)
+                pend = {mess_pend.sender_id : org.org_name}
+                if not pend in messages_pending_list:
+                    messages_pending_list.append(pend)
 
-        pending_messages = False
-        organizations_pending = [] # listas de empresas con mensajes pendientes
-        no_pending_messages = [] # listas de empresas con mensajes pendientes
-        for i in  messages_this_developer:
-            print(f"{i.message_content} escrito por {i.message_created_by.first_name} de la empresa {i.message_created_by.org_name}")
-            if i.readed_for_developer == False:
-                pending_messages == True
-                pend = {i.message_created_by.id : i.message_created_by.org_name}
-                if not pend in organizations_pending:   #evita repetir los elementos en el diccionario
-                    organizations_pending.append(pend)
+       
 
 
-            if i.readed_for_developer == True:
-                pending_messages == False
-                nopend = {i.message_created_by.id:i.message_content}
-                if not nopend in no_pending_messages: #evita repetir los elementos en el diccionario
-                    no_pending_messages.append(nopend)
+        if messages_readed:
+            for mess_readed in messages_readed:
+                print(mess_readed.sender_id)
+                org = Organization.objects.get(id = int(mess_readed.sender_id))
+                print(Organization.objects)
+                pend = {mess_readed.sender_id : org.org_name}
+                if not pend in messages_readed_list:
+                    messages_readed_list.append(pend)
 
-        print(f"El diccionario de pendientes ==> {organizations_pending}")
-        print(f"El diccionario de mensajes leidos  ==> {no_pending_messages}")
+   
+
+
+
     
         
         try:
@@ -62,10 +75,10 @@ def index(request):
             "all_developer_frameworks": all_developer_frameworks,
             "user_biography" : user_biography,
             "update_developer" : update_developer,
-            "pending_messages" : pending_messages,
-            "organizations_pending" : organizations_pending,
-            "no_pending_messages" : no_pending_messages,
-        
+            "messages_pending" : messages_pending_list,
+            "messages_readed" : messages_readed_list,    
+            "all_messages" : all_messages,    
+
         }
         
         return render(request, 'developer_dashboard.html', context)
