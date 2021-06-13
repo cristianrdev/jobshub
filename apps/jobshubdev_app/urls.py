@@ -11,6 +11,7 @@ urlpatterns = [
     path('delete_framework/<int:id_framework>', views.deleteframework ),
     path('update_developer', views.update_developer ),
     path('save_bio', views.save_bio ),
+    path('delete_developer/<int:id_developer>', views.delete_developer ),
 
 
 ]

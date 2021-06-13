@@ -48,23 +48,32 @@
                     <div class="border mt-3"></div>
                     <h3 class="text-center"> Bandeja de mensajes</h3>
                     <div class="border mt-3"></div>
-                    <p class="text-white bg-danger">Mensajes no leídos</p>
+                    <p class="text-white bg-danger">Conversaciones no leídas</p>
+
                     {% for dict_items in messages_pending %}
-                        {% for key, value in dict_items.items %}
-                        <a href="/messages/message_panel_developer/{{key}}">Conversación con {{value}}</a>
-                        {% endfor %}
-                        {{dict_items.value}}
+                    {% for key, value in dict_items.items %}
+                    <a href="/messages/message_panel_developer/{{key}}">Conversación con {{value}}</a>
+                    {% endfor %}
+                    {{dict_items.value}}
                     {% endfor %}
 
 
 
 
-                    <p class="text-white bg-secondary mt-3">Mensajes leídos</p>
+                    <p class="text-white bg-secondary mt-3">Conversaciones leídas</p>
+
+                    {% for dict_items in messages_readed %}
+                    {% for key, value in dict_items.items %}
+                    <a href="/messages/message_panel_developer/{{key}}">Conversación con {{value}}</a>
+                    {% endfor %}
+                    {{dict_items.value}}
+                    {% endfor %}
 
 
 
                 </div>
-
+                <div class="d-flex justify-content-center"><a href="delete_developer/{{active_user.id}}"
+                        class="btn btn-danger mt-4 rounded col-5">ELIMINAR MI CUENTA</a></div>
             </div>
 
 

@@ -25,41 +25,40 @@ def index(request):
         user_biography = BiographyForm()
 
         update_developer = UpdateDeveloper(instance=this_user)
+        #mensajes hechos por la empresa para este desarrollador
+        all_messages_for_dev = Message.objects.filter(reciever_id = this_user_id)
+        #mensajes NO leidos
+        messages_pending = all_messages_for_dev.filter(readed = False)
 
-        messages_pending = Message.objects.filter(reciever_id = this_user_id).filter(readed = False)
-        messages_readed = Message.objects.filter(reciever_id = this_user_id).filter(readed = True)
+        #mensajes  leidos
+        messages_readed = all_messages_for_dev.filter(readed = True)
 
         messages_pending_list = []
         messages_readed_list = []
 
+
+
         
         if messages_pending:
             for mess_pend in messages_pending:
-                print(mess_pend.sender_id)
+                
                 org = Organization.objects.get(id = int(mess_pend.sender_id))
-                print(Organization.objects)
                 pend = {mess_pend.sender_id : org.org_name}
                 if not pend in messages_pending_list:
                     messages_pending_list.append(pend)
 
-       
-
-
         if messages_readed:
             for mess_readed in messages_readed:
-                print(mess_readed.sender_id)
                 org = Organization.objects.get(id = int(mess_readed.sender_id))
-                print(Organization.objects)
                 pend = {mess_readed.sender_id : org.org_name}
-                if not pend in messages_readed_list:
+                if not pend in messages_readed_list and not pend in messages_pending_list:
                     messages_readed_list.append(pend)
 
    
-
-
-
+        print(f" Lista de conversaciones pendientes de leer {messages_pending_list}")
+        print(f"Lista de conversaciones ya leidas {messages_readed_list}")
     
-        
+      
         try:
         
             user_biography = BiographyForm(instance = this_user.user_biography)
@@ -188,4 +187,15 @@ def makedata(request):
     else:
         skills_creator.makelanguage()
         skills_creator.makeframework()
+        return redirect('/')
+
+
+def  delete_developer(request, id_developer):
+    if 'id' not in  request.session or request.session['type'] == "organization":
+        #si no hay sesión o si es empresa (organization) devuelve al login
+        request.session.delete() # se borra cualquier sesión abierta por seguridad
+        return redirect('/')
+    else:
+        print(f'usuario a borrar {id_developer}')
+        this_user = Developer.objects.get(id = id_developer)
         return redirect('/')

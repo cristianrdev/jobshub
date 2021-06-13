@@ -75,14 +75,31 @@ def message_panel_developer(request, id_organization):
         all_languages =  Language.objects.all()
         all_biography = Biography.objects.all()
         # all_messages = Message.objects.filter(sender_id = id_organization)
+
+        all_messages_developer = []
+        all_messages_organization = []
+        
+        # mensajes hechos por el desarrollador
         all_messages_developer = Message.objects.filter(sender_id = id_active_user).filter(reciever_id = id_organization)
+        #mensajes hechos por la empresa
         all_messages_organization = Message.objects.filter(sender_id = id_organization).filter(reciever_id = id_active_user)
+        #marca los mensajes de la empresa como leidos===> readed = True
+        if all_messages_organization:
+            for mes in  all_messages_organization:
+                print(mes.readed)
+                mes.readed = True
+                mes.save(update_fields= ['readed'])
+                
+
+
+
         print("--------------mensajes desarrollador--------------")
         for i in all_messages_developer:
-            print(i.message_content)
+            print(f"{i.message_content} leido? {i.readed}")
+
         print("---------------mensajes empresa---------------")
         for i in all_messages_organization:
-            print(i.message_content)
+            print(f"{i.message_content} leido? {i.readed}")
 
         all_messages = all_messages_developer | all_messages_organization
 
@@ -112,7 +129,8 @@ def make_organization_message(request, id_developer):
             message_content = message_content,
             sender_id = int(request.session['id']),
             reciever_id = id_developer,
-            user_type = "organization"
+            user_type = "organization",
+            readed = False
         )
     
 
@@ -130,7 +148,8 @@ def make_developer_message(request, id_organization):
             message_content = message_content,
             sender_id = int(request.session['id']),
             reciever_id = id_organization,
-            user_type = "developer"
+            user_type = "developer",
+            readed = False
 
         )
         print("grabó+"*20)
