@@ -40,8 +40,8 @@ def ValidarGithub(cadena):
 
 
 class Biography(models.Model):
-    short_bio = models.CharField(max_length=255, null=True, validators=[ValidarLongitudMinima])
-    github_link = models.CharField(max_length=255, null=True, blank=True, validators=[ValidarGithub])
+    short_bio = models.CharField(max_length=255,  blank=True, validators=[ValidarLongitudMinima])
+    github_link = models.CharField(max_length=255, blank=True, validators=[ValidarGithub])
     user = models.OneToOneField(Developer, related_name="user_biography", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

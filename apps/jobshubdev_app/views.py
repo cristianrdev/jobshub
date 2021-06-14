@@ -17,7 +17,13 @@ def index(request):
         this_user = Developer.objects.get(id = int(request.session['id']))
         this_user_id = int(request.session['id'])
         all_messages = Message.objects.all()
-        this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
+
+        # this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
+        try:
+           this_bio = this_user.user_biography.short_bio
+        except:
+            this_bio = "No existe biografía"
+
 
         all_languages = Language.objects.all()
         all_frameworks = Framework.objects.all()

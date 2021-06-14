@@ -41,7 +41,7 @@ def registerdeveloper(request):
         developerform = DeveloperForm()
         #si es get
         #obtiene el form de register
-        print(developerform)
+        
         context = {
             'developerform' : developerform
         }
@@ -70,7 +70,7 @@ def registerorganization(request):
         organizationform = OrganizationForm()
         #si es get
         #obtiene el form de register
-        print(organizationform)
+        
         context = {
             'organizationform' : organizationform
         }

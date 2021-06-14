@@ -30,7 +30,8 @@
         <form action='registerdeveloper' id='formRegister' method='post'>
 
             {% csrf_token %}
-            {{ developerform.as_p }}
+            {{ developerform }}
+
             <button type='submit' class="btn btn-primary col-sm-3 m-2">Registrarse</button>
         </form>
         <a href="/">Atrás</a>

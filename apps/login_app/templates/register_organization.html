@@ -32,7 +32,7 @@
         <form action='registerorganization' id='formRegister' method='post'>
 
             {% csrf_token %}
-            {{ organizationform.as_p }}
+            {{ organizationform }}
             <button type='submit' class="btn btn-primary col-sm-3 m-2">Registrarse</button>
         </form>
         <a href="/">Atrás</a>

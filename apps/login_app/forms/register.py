@@ -6,7 +6,7 @@ from django.forms import widgets
 
 
 class DeveloperForm(ModelForm):
-    password=forms.CharField(widget=forms.PasswordInput(attrs = {"class":"form-control", "style":"width: auto;"}), label='Contraseña')
+    # password=forms.CharField(widget=forms.PasswordInput(attrs = {"class":"form-control", "style":"width: auto;"}), label='Contraseña')
     confirm_password=forms.CharField(widget=forms.PasswordInput(attrs = {"class":"form-control", "style":"width: auto;"}), label='Confirme su contraseña')
     class Meta:
         model = Developer
@@ -14,13 +14,14 @@ class DeveloperForm(ModelForm):
         
 
         widgets = {
-                'first_name': forms.TextInput(attrs = {"class":"form-control", "placeholder": "Ingrese su nombre", "style":"width: auto;"}),
-                'last_name': forms.TextInput(attrs = {"class":"form-control ","placeholder": "Ingrese su apellido", "style":"width: auto;"}),
+                'first_name': forms.TextInput(attrs = {"class":"form-control", "style":"width: auto;"}),
+                'last_name': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
                 'email': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),   
                 'address_name': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
                 'address_number' : forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;", "onkeypress":"isInputNumber(event)"}),
                 'address_detail' : forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
-                # 'phone_number' : forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;", 'type':'number'}),       
+                'password' : forms.PasswordInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
+                    
             }
     
         labels = {
@@ -30,7 +31,6 @@ class DeveloperForm(ModelForm):
                 'address_name': "Nombre de la calle",
                 'address_number' : "Número del domicilio",
                 'address_detail' : "Detalle del domicilio Casa/Departamento (opcional)",
-                'phone_number' : "Teléfono",
                 'password': "Contraseña",
                 'confirm_password': "Confirme su contraseña"
 
@@ -57,9 +57,9 @@ class OrganizationForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-                'org_name': forms.TextInput(attrs = {"class":"form-control", "placeholder": "Ingrese el nombre de su empresa", "style":"width: auto;"}),
-                'first_name': forms.TextInput(attrs = {"class":"form-control", "placeholder": "Ingrese el nombre del representante", "style":"width: auto;"}),
-                'last_name': forms.TextInput(attrs = {"class":"form-control ","placeholder": "Ingrese el apellido del representante", "style":"width: auto;"}),
+                'org_name': forms.TextInput(attrs = {"class":"form-control", "style":"width: auto;"}),
+                'first_name': forms.TextInput(attrs = {"class":"form-control", "style":"width: auto;"}),
+                'last_name': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
                 'email': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),   
                 'address_name': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),
                 'address_number' : forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;", "onkeypress":"isInputNumber(event)"}),
