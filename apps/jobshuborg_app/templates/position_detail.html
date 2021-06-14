@@ -66,9 +66,10 @@
                         <option value="Terminada">Terminada</option>
                     </select>
 
-                    
-                        <button type='submit'  id="mySubmit" class="btn-sm btn-primary ms-4 mt-1" disabled >Actualizar</button>
-                        <!-- class="btn-sm btn-primary ms-4 mt-1" -->
+
+                    <button type='submit' id="mySubmit" class="btn-sm btn-primary ms-4 mt-1"
+                        disabled>Actualizar</button>
+                    <!-- class="btn-sm btn-primary ms-4 mt-1" -->
                 </form>
 
 
@@ -116,73 +117,76 @@
                 <h3></h3>
 
             </div>
-
+            <!-- lista de desarrolladores ordenados -->
             <div class="col-8">
 
 
                 <h3 class="text-center">Match de Desarroladores</h3>
                 {% for dev in all_developers|dictsortreversed:"skills_number"|dictsortreversed:"match" %}
-                <div class="border bg-light p-2 m-2">
+                <div class="row border rounded bg-light p-1 mt-2">
 
 
-
-
-                    <div class="d-flex justify-content-start">
-                        <p class="text-center"> <a href="/jobshuborg/developer_detail/{{dev.id}}">{{dev.first_name}}
-                                {{dev.last_name}}</a> : {{dev.user_biography.short_bio}}</p>
-                    </div>
-
-
-
-                    <div class="d-flex justify-content-between">
-
-                        {% for language in all_languages %}
-                        {% if language in dev.developer_language.all%}
-                        <div class=" m-1">
-                            <div class="row">
-                                <i class="{{language.icon_link_language}} display-1"></i>
-                            </div>
-                            <div class="row">
-                                <p class=" text-center"> {{language.skill_name}}</p>
+                    <div class="row my-2">
+                        <div class="col-auto">
+                            <div class="border bg-white p-2 rounded">
+                                    <p class="text-center">MATCH</p>
+                                    <h3 class="text-center">{{dev.match_proportion|floatformat:1 }}%</h3>
+                                    <p class="text-center">{{dev.match}} match skills</p>
+                              
                             </div>
                         </div>
-                        {% endif %}
-                        {% endfor %}
 
-
-                        {% for framework in dev.developer_framework.all %}
-                        {% if framework in dev.developer_framework.all%}
-                        <div class="m-1 col-1">
-                            <div class="row">
-                                <i class="{{framework.icon_link_framework}} display-1 "></i>
-
-                            </div>
-                            <div class="row">
-                                <p class="text-center"> {{framework.skill_name}}</p>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-
-
-                        <div class="  ">
-                            <div class="">
-                                <p class="text-center">MATCH</p>
-                            </div>
-                            <div class="row">
-                                <h3 class="text-center">{{dev.match_proportion|floatformat:1 }}%</h3>
-                                <p class="text-center">{{dev.match}} </p>
-                                <p class="text-center">{{dev.skills_number}} </p>
-                            </div>
+                        <div class="col-auto">
+                            <p class="text"> <a href="/jobshuborg/developer_detail/{{dev.id}}"
+                                    class="link-secondary text-decoration-none">
+                                    <h4>{{dev.first_name}} {{dev.last_name}}</h4>
+                                </a> <a href="{{dev.user_biography.github_link}}"
+                                    class="devicon-github-original-wordmark">{{dev.user_biography.github_link}}</a> </p>
+                            <span class="">{{dev.user_biography.short_bio}} </span>
                         </div>
                     </div>
 
 
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="row">
+                                {% for language in all_languages %}
+                                {% if language in dev.developer_language.all%}
+                                <div class=" col-auto">
+                                    <div class="row">
+                                        <i class="{{language.icon_link_language}} display-1"></i>
+                                    </div>
+                                    <div class="row">
+                                        <p class=" text-center"> {{language.skill_name}}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
 
 
+                                {% for framework in dev.developer_framework.all %}
+                                {% if framework in dev.developer_framework.all%}
+                                <div class="col-auto">
+                                    <div class="row">
+                                        <i class="{{framework.icon_link_framework}} display-1 "></i>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-center"> {{framework.skill_name}}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
                 </div>
                 {% endfor %}
-
             </div>
         </div>
 

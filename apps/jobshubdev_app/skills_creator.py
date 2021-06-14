@@ -10,7 +10,6 @@ def makelanguage():
     python = Language.objects.create(skill_name = "Python", icon_link_language= "devicon-python-plain colored")
     
     js = Language.objects.create(skill_name = "Js", icon_link_language= "devicon-javascript-plain colored")
-    java = Language.objects.create(skill_name = "JAVASCRIPT", icon_link_language= "devicon-java-plain-wordmark colored")
     csharp = Language.objects.create(skill_name = "C#", icon_link_language= "devicon-csharp-plain colored")
     swift = Language.objects.create(skill_name = "Swift", icon_link_language= "devicon-swift-plain colored")
     go = Language.objects.create(skill_name = "Go", icon_link_language= "devicon-go-plain colored")

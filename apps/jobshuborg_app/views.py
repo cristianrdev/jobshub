@@ -312,7 +312,7 @@ def position_detail(request, id_position):
             print(f"Número de match por developer {dev.first_name} ----->>>{match_language_counter + match_framework_counter}")
             if skills_counter:
                 porcentaje = dev.match/skills_counter
-            porcentaje = 0
+            
             # print(type(dev.match))
             print(f"Porcentaje de coincidencia de {dev.first_name} ------->>> {porcentaje}")
             print(f"Numero de frameworks de {dev.first_name} ------->>> {dev.skills_number}")

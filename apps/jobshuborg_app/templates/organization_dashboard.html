@@ -94,74 +94,60 @@
 
         <!-- FIN TABLA PUBLICACIONES -->
 
-
-
-
         <h3 class="text-center mt-4">Lista de Desarroladores Disponibles</h3>
         {% for dev in all_developers %}
-        <div class="border bg-light p-2 my-2">
-            <div class="row ">
-
-                <div class="col-4">
-                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none link-primary" >
-                        <p class="text-center fw-bold"> {{dev.first_name}} {{dev.last_name}} </p>
-                        
+        <div class="row border bg-light p-1 my-2">
+       
+                <!-- colummnas del developer -->
+                <div class="col-3 border-end">
+                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none link-secondary">
+                        <p class="text-center fw-bold"> <h3>{{dev.first_name}} {{dev.last_name}}</h3>  </p>
                     </a>
                     {% if dev.user_biography.github_link %}
-                    <a href="{{dev.user_biography.github_link}}" class="link-primary "><i class="devicon-github-original-wordmark"></i>{{dev.user_biography.github_link}}</a>
+                    <a href="{{dev.user_biography.github_link}}" class="link-primary "><i
+                            class="devicon-github-original-wordmark"></i>{{dev.user_biography.github_link}}</a>
                     {% endif%}
 
-                    <div class="border round bg-white p-2">
-
+                    <div class="">
                         <p class="text-justify">{{dev.user_biography.short_bio}}</p>
                     </div>
 
                 </div>
+                <!-- colummnas de las skills -->
+                <div class="col-8">
+                    <div class="row mt-3">
+                        {% for language in all_languages %}
+                        {% if language in dev.developer_language.all%}
+                        <div class="col-auto">
+                            <div class="row">
+                                <i class="{{language.icon_link_language}} display-1"></i>
+                            </div>
+                            <div class="row">
+                                <p class=" text-center"> {{language.skill_name}}</p>
+                            </div>
 
-                {% for language in all_languages %}
-                {% if language in dev.developer_language.all%}
-                <div class="col-1">
-                    <div class="row">
-                        <i class="{{language.icon_link_language}} display-1"></i>
-                    </div>
-                    <div class="row">
-                        <p class=" text-center"> {{language.skill_name}}</p>
-                    </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
 
+
+                        {% for framework in dev.developer_framework.all %}
+                        {% if framework in dev.developer_framework.all%}
+                        <div class="col-auto">
+                            <div class="">
+                                <i class="{{framework.icon_link_framework}} display-1  "></i>
+                                <p class="text-center "> {{framework.skill_name}}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                    </div>
                 </div>
-                {% endif %}
-                {% endfor %}
+
+        
 
 
-                {% for framework in dev.developer_framework.all %}
-
-                {% if framework in dev.developer_framework.all%}
-                <div class="col-1">
-                    <div class="row">
-                        <i class="{{framework.icon_link_framework}} display-1 "></i>
-
-                    </div>
-
-
-                    <div class="row">
-                        <p class="text-center"> {{framework.skill_name}}</p>
-                    </div>
-
-                </div>
-                {% endif %}
-
-
-
-                {% endfor %}
-
-
-
-            </div>
-
-            <div class="row ">
-
-
-            </div>
         </div>
         {% endfor %}
 
