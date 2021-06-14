@@ -8,7 +8,7 @@ from apps.jobshubdev_app.models import Biography
 class BiographyForm(ModelForm):
     class Meta:
         model = Biography
-        fields = {'short_bio','github_link'}
+        fields = ['short_bio','github_link']
         widgets = {
             'short_bio': forms.Textarea(attrs = {"class":"form-control ", "rows":4, "cols": "50%" , "style":"resize: none;"}),
 

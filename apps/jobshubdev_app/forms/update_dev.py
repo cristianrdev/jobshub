@@ -7,7 +7,7 @@ from django.forms import ModelForm
 class UpdateDeveloper(ModelForm):
     class Meta:
         model = Developer
-        fields = {'address_name','address_number','address_detail'}
+        fields = ['address_name','address_number','address_detail']
 
         widgets = {
             'address_name': forms.TextInput(attrs = {"class":"form-control ", "style":"width: auto;"}),

@@ -10,7 +10,7 @@ class DeveloperForm(ModelForm):
     confirm_password=forms.CharField(widget=forms.PasswordInput(attrs = {"class":"form-control", "style":"width: auto;"}), label='Confirme su contraseña')
     class Meta:
         model = Developer
-        fields = {'first_name', 'last_name', 'email', 'address_name', 'address_number', 'address_detail', 'password', 'confirm_password' }
+        fields = ['first_name', 'last_name', 'email', 'address_name', 'address_number', 'address_detail', 'password', 'confirm_password' ]
         
 
         widgets = {
