@@ -55,10 +55,10 @@ def validarFecha(fecha):
     print(birth_date)
     birth_date_user = date(birth_year, birth_month, birth_day )
     days_has_passed = (date_today-birth_date_user).days
-    # valida la edad mayor a 13 años
-    if days_has_passed < (365.2425*13): #aqui se cambia la edad de acceso---------------------
+    # valida la edad mayor a 18 años
+    if days_has_passed < (365.2425*18): #aqui se cambia la edad de acceso---------------------
             raise forms.ValidationError(
-            f'Error: la fecha de nacimiento debe ser mayor de 13 años'
+            f'Error: la fecha de nacimiento debe ser mayor de 18 años'
             )
 
 numeric = RegexValidator(r'^[0-9+]', 'Only digit characters.')
@@ -70,7 +70,7 @@ class Developer(models.Model):
     first_name = models.CharField(max_length=30, blank=False, null=False, validators=[ValidarLongitudMinima])
     last_name = models.CharField(max_length=30, blank=False, null=False, validators=[ValidarLongitudMinima] )
     email = models.CharField(max_length=30, blank=False, null=False, validators=[validarEmail])
-    address_name = models.CharField(max_length=50, blank=False, null=False,)
+    address_name = models.CharField(max_length=50, blank=False, null=False,validators=[ValidarLongitudMinima])
     address_number = models.CharField(max_length=8, blank=False, null=False, validators=[ValidarLongitudMinima])
     address_detail = models.CharField(max_length=255, blank=True)
     match = models.CharField(max_length=10, blank=True)
@@ -110,7 +110,7 @@ class Organization(models.Model):
     first_name = models.CharField(max_length=45, blank=False, null=False, validators=[ValidarLongitudMinima])
     last_name = models.CharField(max_length=45, blank=False, null=False, validators=[ValidarLongitudMinima] )
     email = models.CharField(max_length=50, validators=[validarEmail])
-    address_name = models.CharField(max_length=50, blank=False, null=False,)
+    address_name = models.CharField(max_length=50, blank=False, null=False, validators=[ValidarLongitudMinima])
     address_number = models.CharField(max_length=8, blank=False, null=False, validators=[ValidarLongitudMinima])
     address_detail = models.CharField(max_length=255, blank=True)
     password = models.CharField(max_length=100, validators=[ValidarLongitudPassword])

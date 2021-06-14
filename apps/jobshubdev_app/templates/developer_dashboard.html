@@ -39,11 +39,20 @@
                     <p>Apellido: <input type="text" class="form-control" value="{{active_user.last_name}}" disabled>
                     </p>
                     <p>Email :<input type="text" class="form-control" value="{{active_user.email}}" disabled> </p>
+                    <i class="devicon-github-original-wordmark"> GitHub <a
+                            href="{{this_bio.github_link}}">{{this_bio.github_link}}</a> </i>
+                    <div></div>
+                    <div>Descripción de mi perfil: <p> {{this_bio.short_bio}} </p>
+                    </div>
+                    <div class="border-top"></div>
                     {{update_developer.as_p}}
                     <button type='submit' class="btn btn-primary">Actualizar datos</button>
                 </form>
 
-
+                {% for err in request.session.error_messages %}
+                <div class="text-danger">{{err}}</div>
+                {% endfor%}
+                <!-- bandeja de mensajes -->
                 <div class="row">
                     <div class="border mt-3"></div>
                     <h3 class="text-center"> Bandeja de mensajes</h3>
@@ -92,6 +101,9 @@
                     <small id="passwordHelpInline" class="text-muted row">
                         Debe ser entre 10 a 255 caracteres.
                     </small>
+                    {% for err in request.session.error_messages_bio %}
+                    <div class="text-danger">{{err}}</div>
+                    {% endfor%}
                     <button type='submit' class="btn btn-primary mt-2 ">Guardar/Modificar</button>
                 </form>
 

@@ -16,9 +16,3 @@ class Position(models.Model):
     position_filled_by = models.OneToOneField(Developer, blank=True, null=True ,related_name="developer_position", on_delete=models.Case)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-# class StatePosition(models.Model):
-#     state_name = models.CharField(max_length=45, blank=False, null=False)
-#     state_position = models.ForeignKey(Framework, related_name="position_state", on_delete = models.CASCADE)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)

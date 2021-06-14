@@ -50,11 +50,11 @@ def registerdeveloper(request):
     else:
         #si es post
         developerform = DeveloperForm(request.POST) #se obtiene el formulario con los datos recibidos por POST
-        if developerform.is_valid():
+        if developerform.is_valid(): # se pregunta si es válido
             print("es valido"*30)
             user = developerform.save()
-            request.session['id'] = user.id
-            request.session['type'] = "developer"
+            request.session['id'] = user.id # se crea la variable de sessión con su id
+            request.session['type'] = "developer" # se crea la variable de sessión con el tipo de usuario, en este caso desarrollador
             print(request.session['id'])
             return redirect('/jobshubdev') #cambiar acá segun la app----------------------------------
         else: 

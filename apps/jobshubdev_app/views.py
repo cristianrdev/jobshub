@@ -6,7 +6,7 @@ from . import skills_creator
 from .forms.update_dev import UpdateDeveloper
 from .forms.biography import BiographyForm 
 from apps.messages_app.models import Message
-
+import re
 # Create your views here.
 def index(request):
     if 'id' not in  request.session or request.session['type'] == "organization":
@@ -17,6 +17,7 @@ def index(request):
         this_user = Developer.objects.get(id = int(request.session['id']))
         this_user_id = int(request.session['id'])
         all_messages = Message.objects.all()
+        this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
 
         all_languages = Language.objects.all()
         all_frameworks = Framework.objects.all()
@@ -77,6 +78,7 @@ def index(request):
             "messages_pending" : messages_pending_list,
             "messages_readed" : messages_readed_list,    
             "all_messages" : all_messages,    
+            "this_bio" : this_bio,    
 
         }
         
@@ -140,6 +142,8 @@ def update_developer(request):
         request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
+        request.session['error_messages'] = []
+        request.session['error_messages_bio'] = []
         this_user = Developer.objects.get(id = int(request.session['id']))
         update_developer = UpdateDeveloper(request.POST)
         if update_developer.is_valid():
@@ -148,8 +152,15 @@ def update_developer(request):
             this_user.address_number = request.POST['address_number']
             this_user.address_detail = request.POST['address_detail']
             this_user.save(update_fields=['address_name','address_number','address_detail'])
+        else:
+            if len(request.POST['address_name']) < 2:
+                request.session['error_messages'] = ["Nombe de la calle menor 2 caracteres"] #se crea una variable de sesión que es un lista de errores
+            if len(request.POST['address_number']) < 2:
+                request.session['error_messages'].append("El número del domicilio debe contener al menos 2 caracteres") #se crea una variable de sesión que es un lista de errores
+            
 
         return redirect('/')
+
    
 
 def save_bio(request):
@@ -158,23 +169,31 @@ def save_bio(request):
         request.session.delete() # se borra cualquier sesión abierta por seguridad
         return redirect('/')
     else:
+        request.session['error_messages_bio'] = []
+        request.session['error_messages'] = []
         this_user = Developer.objects.get(id = int(request.session['id']))
         bio_form =  BiographyForm(request.POST)
-        if bio_form.is_valid:
+        if bio_form.is_valid():
             try:
                 #existe biografía
                 this_bio = Biography.objects.get(id= int(this_user.user_biography.id) ) 
+               
                 print(f"---------->>>>> {this_bio.short_bio}")
-
                 this_bio.short_bio = request.POST['short_bio']
+                this_bio.github_link = request.POST['github_link']
                 print(f"---------->>>>> {this_bio.short_bio}")
-                this_bio.save()
+                this_bio.save(update_fields=['short_bio','github_link'])
             except:
                 #no existe biografía
                 print("no existe biografia al grabar")
                 print("se crea biografía")
                 Biography.objects.create(short_bio = request.POST['short_bio'], user = this_user )
-        
+        else:
+            p = re.compile('(?:https?://)?(?:www[.])?github[.]com/[\w-]+/?')
+            if not p.match(request.POST['github_link']):
+                request.session['error_messages_bio'].append("El link no es válido")
+            if len(request.POST['short_bio']) < 10:
+                request.session['error_messages_bio'].append("Su perfil debe contener entre 10 a 255 caracteres")        
         return redirect('/')
 
 
