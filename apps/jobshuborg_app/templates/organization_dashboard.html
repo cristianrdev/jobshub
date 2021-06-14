@@ -28,15 +28,17 @@
 
         <a href="new_position" class="btn btn-warning  text-white m-4">Publicar una nueva oferta de trabajo</a>
         <!-- tabla lista de publicaciones de trabajo] -->
-       
+
         <div class="row  rounded">
             <div class="d-flex justify-content-between">
                 <div class="text-center flex-fill bg-light">
                     <p class="font-weight-bold border-bottom">Lista de cargos por ocupar</p>
                     {% for myposition in all_my_positions %}
                     {%if myposition.state_position == "En contratacion" %}
-                    <a href="position_detail/{{myposition.id}}"
-                        class=" link-primary text-decoration-none text-center">{{myposition.position_title}}</a>
+                    <p>
+                        <a href="position_detail/{{myposition.id}}"
+                            class=" link-primary text-decoration-none text-center">{{myposition.position_title}}</a>
+                    </p>
                     {% endif %}
                     {% endfor%}
                 </div>
@@ -46,18 +48,24 @@
 
                     {% for myposition in all_my_positions %}
                     {%if myposition.state_position == "En evaluacion" %}
-                    <a href="position_detail/{{myposition.id}}"
-                        class="link-primary text-decoration-none text-center">{{myposition.position_title}} </a>
+                    <p>
+                        <a href="position_detail/{{myposition.id}}"
+                            class="link-primary text-decoration-none text-center">{{myposition.position_title}} </a>
+                    </p>
+
                     {% endif %}
                     {% endfor%}
 
                 </div>
                 <div class="text-center flex-fill bg-light">
-                    <p class="font-weight-bold border-bottom" >Lista de cargos concluidos</p>
+                    <p class="font-weight-bold border-bottom">Lista de cargos concluidos</p>
                     {% for myposition in all_my_positions %}
                     {%if myposition.state_position == "Terminada" %}
-                    <a href="position_detail/{{myposition.id}}"
-                        class=" link-primary text-decoration-none ">{{myposition.position_title}} </a>
+                    <p>
+                        <a href="position_detail/{{myposition.id}}"
+                            class=" link-primary text-decoration-none ">{{myposition.position_title}} </a>
+                    </p>
+
                     {% endif %}
                     {% endfor%}
                 </div>
@@ -95,10 +103,13 @@
             <div class="row ">
 
                 <div class="col-4">
-                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none">
-                        <p class="text-center fw-bold"> {{dev.first_name}} {{dev.last_name}}</p>
+                    <a href="developer_detail/{{dev.id}}" class="text-decoration-none link-primary" >
+                        <p class="text-center fw-bold"> {{dev.first_name}} {{dev.last_name}} </p>
+                        
                     </a>
-
+                    {% if dev.user_biography.github_link %}
+                    <a href="{{dev.user_biography.github_link}}" class="link-primary "><i class="devicon-github-original-wordmark"></i>{{dev.user_biography.github_link}}</a>
+                    {% endif%}
 
                     <div class="border round bg-white p-2">
 
