@@ -1,3 +1,4 @@
+from apps.jobshuborg_app.models import Position
 from apps.jobshubdev_app.models import Framework, Language
 from django.shortcuts import render, redirect
 from apps.login_app.models import Developer, Organization
@@ -17,19 +18,21 @@ def index(request):
         this_user = Developer.objects.get(id = int(request.session['id']))
         this_user_id = int(request.session['id'])
         all_messages = Message.objects.all()
+        all_positions = Position.objects.all()
 
-        # this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
+        user_biography = BiographyForm() # si no hay bio
+        this_bio = ""
         try:
-           this_bio = this_user.user_biography.short_bio
+            user_biography = BiographyForm(instance = this_user.user_biography) #si hay bio
+            this_bio = this_user.user_biography #obtiene el objeto bio del usuario
         except:
-            this_bio = "No existe biografía"
-
+            print("No existe biografia creada"*50)
 
         all_languages = Language.objects.all()
         all_frameworks = Framework.objects.all()
         all_developer_languages= this_user.developer_language.all()
         all_developer_frameworks= this_user.developer_framework.all()
-        user_biography = BiographyForm()
+        
 
         update_developer = UpdateDeveloper(instance=this_user)
         #mensajes hechos por la empresa para este desarrollador
@@ -66,12 +69,7 @@ def index(request):
         print(f"Lista de conversaciones ya leidas {messages_readed_list}")
     
       
-        try:
-        
-            user_biography = BiographyForm(instance = this_user.user_biography)
-        
-        except:
-            print("No existe biografia creada")
+
 
         context = {
             "active_user" : Developer.objects.get(id = int(request.session['id'])),
@@ -85,6 +83,7 @@ def index(request):
             "messages_readed" : messages_readed_list,    
             "all_messages" : all_messages,    
             "this_bio" : this_bio,    
+            "all_positions" : all_positions,    
 
         }
         
@@ -179,28 +178,64 @@ def save_bio(request):
         request.session['error_messages'] = []
         this_user = Developer.objects.get(id = int(request.session['id']))
         bio_form =  BiographyForm(request.POST)
+        print(bio_form.is_valid())
+        
         if bio_form.is_valid():
             try:
-                #existe biografía
-                this_bio = Biography.objects.get(id= int(this_user.user_biography.id) ) 
-               
-                print(f"---------->>>>> {this_bio.short_bio}")
+                #si existe biografía
+                this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
                 this_bio.short_bio = request.POST['short_bio']
                 this_bio.github_link = request.POST['github_link']
-                print(f"---------->>>>> {this_bio.short_bio}")
                 this_bio.save(update_fields=['short_bio','github_link'])
-            except:
-                #no existe biografía
-                print("no existe biografia al grabar")
-                print("se crea biografía")
-                Biography.objects.create(short_bio = request.POST['short_bio'], user = this_user )
-        else:
-            p = re.compile('(?:https?://)?(?:www[.])?github[.]com/[\w-]+/?')
-            if not p.match(request.POST['github_link']):
-                request.session['error_messages_bio'].append("El link no es válido")
-            if len(request.POST['short_bio']) < 10:
-                request.session['error_messages_bio'].append("Su perfil debe contener entre 10 a 255 caracteres")        
+               
+            except:  #si NO existe biografia
+                Biography.objects.create(
+                    short_bio = request.POST['short_bio'],
+                    github_link = request.POST['github_link'],
+                    user = this_user,
+                )
+        #si no es valido avisar porque no es valido
+        p = re.compile('(?:https?://)?(?:www[.])?github[.]com/[\w-]+/?')
+        if not p.match(request.POST['github_link']):
+            request.session['error_messages_bio'].append("El link no es válido")
+
+        if len(request.POST['short_bio']) < 10:
+            request.session['error_messages_bio'].append("Su perfil debe contener entre 10 a 255 caracteres")        
+            
+
         return redirect('/')
+        # try:
+        #     aa = this_user.user_biography.id
+        #     this_user_have_biography = True
+            
+        # except:
+        #     this_user_have_biography = False
+
+        # if this_user_have_biography == True:
+        #     #existe biografía
+        #     this_bio = Biography.objects.get(id= int(this_user.user_biography.id) )
+        #     if bio_form.is_valid():
+        #         print(f"---------->>>>> {this_bio.short_bio}")
+        #         this_bio.short_bio = request.POST['short_bio']
+        #         this_bio.github_link = request.POST['github_link']
+        #         print(f"---------->>>>> {this_bio.short_bio}")
+        #         this_bio.save(update_fields=['short_bio','github_link'])
+        #     else:
+        #         p = re.compile('(?:https?://)?(?:www[.])?github[.]com/[\w-]+/?')
+        #         if not p.match(request.POST['github_link']):
+        #             request.session['error_messages_bio'].append("El link no es válido")
+        #         if len(request.POST['short_bio']) < 10:
+        #             request.session['error_messages_bio'].append("Su perfil debe contener entre 10 a 255 caracteres")        
+        #             return redirect('/')
+
+
+        # try:
+        #     this_bio = Biography.objects.get(id= int(this_user.user_biography.id) ) 
+        # except:
+        #     #no existe biografía
+        #     print("no existe biografia al grabar")
+        #     print("se crea biografía")
+        #     Biography.objects.create(short_bio = request.POST['short_bio'], user = this_user )
 
 
 

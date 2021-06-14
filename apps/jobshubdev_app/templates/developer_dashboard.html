@@ -167,6 +167,100 @@
 
             </div>
         </div>
+         
+
+        <div class="row my-2">
+            <h4 class="border-bottom text-center  mt-3">Ofertas de trabajo en contratación</h4>
+            {% for position in all_positions %}
+            {%if position.state_position == "En contratacion" %}
+            <div class="row pt-3">
+                <div class="col-5 border-end">
+                    <h5 class="text-primary">{{position.position_title}} </h5>
+                    <h6 class="text-muted">{{position.position_description}}</h6>
+                    <span>Publicada por la empresa : {{position.position_organization.org_name}}</span>
+
+                </div>
+                <div class="col-auto mt-4">
+                    {% for skill in position.position_language.all%}
+                    <i class="{{skill.icon_link_language}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-auto  mt-4">
+                    {% for skill in position.position_framework.all%}
+                    <i class="{{skill.icon_link_framework}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% endif %}
+            {% endfor%}
+
+            
+            <h4 class="border-bottom text-center  mt-3">Ofertas de trabajo en evaluación</h4>
+            {% for position in all_positions %}
+            {%if position.state_position == "En evaluacion" %}
+            <div class="row pt-3">
+                <div class="col-5 border-end  ">
+                    <h5 class="text-primary">{{position.position_title}} </h5>
+                    <h6 class="text-muted">{{position.position_description}}</h6>
+                    <span>Publicada por la empresa : {{position.position_organization.org_name}}</span>
+
+                </div>
+                <div class="col-auto  mt-4">
+                    {% for skill in position.position_language.all%}
+                    <i class="{{skill.icon_link_language}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-auto  mt-4">
+                    {% for skill in position.position_framework.all%}
+                    <i class="{{skill.icon_link_framework}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% endif %}
+            {% endfor%}
+
+
+            <h4 class="border-bottom text-center mt-3">Ofertas de trabajo en Terminadas</h4>
+           
+            {% for position in all_positions %}
+            {%if position.state_position == "Terminada" %}
+            <div class="row pt-3">
+                <div class="col-5 border-end ">
+                    <h5 class="text-primary">{{position.position_title}} </h5>
+                    <h6 class="text-muted">{{position.position_description}}</h6>
+                    <span>Publicada por la empresa : {{position.position_organization.org_name}}</span>
+
+                </div>
+                <div class="col-auto  mt-4">
+                    {% for skill in position.position_language.all%}
+                    <i class="{{skill.icon_link_language}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="col-auto  mt-4">
+                    {% for skill in position.position_framework.all%}
+                    <i class="{{skill.icon_link_framework}}"></i>
+                    <span>{{skill.skill_name}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% endif %}
+            {% endfor%}
+
+
+
+
+        </div>
 
 
     </div>

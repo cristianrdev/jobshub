@@ -58,7 +58,7 @@ def registerdeveloper(request):
             print(request.session['id'])
             return redirect('/jobshubdev') #cambiar acá segun la app----------------------------------
         else: 
-            print("INvalido"*30)
+            print("Invalido"*30)
             context = {
             'developerform' : developerform
             }
